@@ -1,7 +1,7 @@
 export default function klona(x) {
-	var k, tmp, str=Object.prototype.toString.call(x);
+	var k, tmp, str=Object.prototype.toString.call(x)[8];
 
-	if (str === '[object Object]') {
+	if (str === 'O') {
 		tmp = {};
 		for (k in x) {
 			tmp[k] = klona(x[k]);
@@ -9,7 +9,7 @@ export default function klona(x) {
 		return tmp;
 	}
 
-	if (str === '[object Array]') {
+	if (str === 'A') {
 		k = x.length;
 		for (tmp=Array(k); k--;) {
 			tmp[k] = klona(x[k]);
@@ -17,11 +17,11 @@ export default function klona(x) {
 		return tmp;
 	}
 
-	if (str === '[object Date]') {
+	if (str === 'D') {
 		return new Date(+x);
 	}
 
-	if (str === '[object RegExp]') {
+	if (str === 'R') {
 		tmp = new RegExp(x.source, x.flags);
 		tmp.lastIndex = x.lastIndex;
 		return tmp;
